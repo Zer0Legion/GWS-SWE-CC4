@@ -2,6 +2,8 @@
 Take home assignment for SWE Intern (GDS CC4.0)
 
 ## Features and Design Choices
+### References
+Build-related files like checkstyle and other configuration files were referenced from https://se-education.org/. 
 ### Use of `HashMap` to store payment mappings
 Multiple entries with the same name are now allowed, which adds to the payer's total amount paid in the logic component.
 This is to facilitate the flow of a normal trip with friends, where multiple transactions are made by the same people throughout the trip. 
