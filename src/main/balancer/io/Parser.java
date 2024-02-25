@@ -1,8 +1,6 @@
-package balancer.io;
+package src.main.balancer.io;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.TreeMap;
 
 /**
  * Class to handle text parsing related to the Balancer app.

@@ -1,6 +1,6 @@
-package balancer;
+package src.main.balancer;
 
-import balancer.io.Parser;
+import src.main.balancer.io.Parser;
 
 import java.util.Scanner;
 
