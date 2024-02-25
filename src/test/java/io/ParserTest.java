@@ -1,4 +1,4 @@
-package src.test.io;
+package io;
 
 public class ParserTest {
 }

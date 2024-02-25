@@ -1,8 +1,8 @@
-package src.main.balancer;
-
-import src.main.balancer.io.Parser;
+package balancer;
 
 import java.util.Scanner;
+
+import balancer.io.Parser;
 
 /**
  * The main class for the Balancer app.
