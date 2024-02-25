@@ -1,6 +1,10 @@
 package io;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.HashMap;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,18 +12,13 @@ import org.junit.jupiter.api.Test;
 
 import balancer.io.Parser;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.util.HashMap;
-
 public class ParserTest {
+    private static final String INCORRECT_FORMAT = "Please input an entry like this!\n{name},{amount paid}\r\n";
     private Parser parser;
-
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
     private PrintStream originalErr = System.err;
-    private static final String INCORRECT_FORMAT = "Please input an entry like this!\n{name},{amount paid}\r\n";
 
     @BeforeEach
     public void setUp() {
@@ -88,7 +87,7 @@ public class ParserTest {
     }
 
     @Test
-    public void testParseInvalidFloat_NumberFormatWarning() {
+    public void testParseInvalidFloatNumberFormatWarning() {
         String testInput = "Alice, not_float";
 
         parser.parse(testInput);
