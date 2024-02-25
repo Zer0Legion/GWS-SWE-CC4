@@ -1,5 +1,5 @@
 # GWS-SWE-CC4
-Take home assignment for SWE Intern (GDS CC4.0)
+Take home assignment for SWE Intern (GDS CC4.0).
 
 ## Features and Design Choices
 ### References
@@ -13,4 +13,20 @@ This is to account for situations where someone in the group has a windfall that
 > The representation for such an input is:
 > 
 > ```Ali,-5000```
+### String parsing
+My program assumes that a valid name does not contain any commas in it.
 
+During parsing and returning the answer, my program will parse the name into its appropriate Title Case format:
+
+>`alice` will be displayed as `Alice`
+> 
+ Thus, `alice` and `Alice` will be recognized as the same person, but `Alice Tan` and `Alice Lim` will not.
+>
+> `old mcDonald` will be displayed as `Old Mcdonald`
+
+and so on.
+
+### Value parsing
+My program will parse any `float` value that Java's `Float.parseFloat` can.
+
+Hence, commas should not be placed in the amount paid.

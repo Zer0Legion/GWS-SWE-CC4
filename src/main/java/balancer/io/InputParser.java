@@ -6,7 +6,7 @@ import java.util.HashMap;
  * Class to handle text parsing related to the Balancer app.
  *
  */
-public class Parser {
+public class InputParser {
     private static final String INCORRECT_FORMAT = "Please input an entry like this!\n{name},{amount paid}";
 
     /**
@@ -21,7 +21,7 @@ public class Parser {
     /**
      * Constructor for the Parser class. Creates a parser to track information related to the app.
      */
-    public Parser() {
+    public InputParser() {
         this.payments = new HashMap<>();
         this.total = 0;
         this.nPax = 0;
@@ -86,7 +86,7 @@ public class Parser {
      * @param str The string to be parsed.
      */
     public void parse(String str) {
-        String[] params = str.split(",");
+        String[] params = str.split(",", 2);
         if (params.length != 2) {
             System.out.println(INCORRECT_FORMAT);
         } else {

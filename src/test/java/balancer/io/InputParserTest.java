@@ -1,4 +1,4 @@
-package io;
+package balancer.io;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -10,11 +10,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import balancer.io.Parser;
-
-public class ParserTest {
+public class InputParserTest {
     private static final String INCORRECT_FORMAT = "Please input an entry like this!\n{name},{amount paid}\r\n";
-    private Parser parser;
+    private InputParser inputParser;
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
@@ -22,7 +20,7 @@ public class ParserTest {
 
     @BeforeEach
     public void setUp() {
-        parser = new Parser();
+        inputParser = new InputParser();
         System.setOut(new PrintStream(outContent));
         System.setErr(new PrintStream(errContent));
     }
@@ -38,8 +36,8 @@ public class ParserTest {
         String testInput = "Alice,20";
         float expectedNPax = 1;
 
-        parser.parse(testInput);
-        assertEquals(expectedNPax, parser.getnPax());
+        inputParser.parse(testInput);
+        assertEquals(expectedNPax, inputParser.getnPax());
     }
 
     @Test
@@ -47,8 +45,8 @@ public class ParserTest {
         String testInput = "Alice,20";
         float expectedTotal = 20;
 
-        parser.parse(testInput);
-        assertEquals(expectedTotal, parser.getTotal());
+        inputParser.parse(testInput);
+        assertEquals(expectedTotal, inputParser.getTotal());
     }
 
     @Test
@@ -57,8 +55,8 @@ public class ParserTest {
         HashMap<String, Float> expectedMapping = new HashMap<>();
         expectedMapping.put("alice", 20F);
 
-        parser.parse(testInput);
-        assertEquals(expectedMapping, parser.getPayments());
+        inputParser.parse(testInput);
+        assertEquals(expectedMapping, inputParser.getPayments());
     }
 
     @Test
@@ -66,31 +64,37 @@ public class ParserTest {
         String testInput = "Alice,20";
         HashMap<String, Float> expectedMapping = new HashMap<>();
         expectedMapping.put("alice", 40F);
-        parser.parse(testInput);
-        parser.parse(testInput);
-        assertEquals(expectedMapping, parser.getPayments());
+        inputParser.parse(testInput);
+        inputParser.parse(testInput);
+        assertEquals(expectedMapping, inputParser.getPayments());
     }
 
     @Test
     public void testAverageNotComputedBeforeTermination() {
         String testInput = "Alice,20";
-        parser.parse(testInput);
-        assertEquals(0F, parser.getAverage());
+        inputParser.parse(testInput);
+        assertEquals(0F, inputParser.getAverage());
     }
     @Test
     public void testEmptyInputAverageComputed() {
         String testInput1 = "Alice,20";
-        parser.parse(testInput1);
-        parser.computeAverage();
+        inputParser.parse(testInput1);
+        inputParser.computeAverage();
         float expectedAverage = 20F;
-        assertEquals(expectedAverage, parser.getAverage());
+        assertEquals(expectedAverage, inputParser.getAverage());
     }
 
     @Test
     public void testParseInvalidFloatNumberFormatWarning() {
         String testInput = "Alice, not_float";
+        inputParser.parse(testInput);
+        assertEquals(INCORRECT_FORMAT, outContent.toString());
+    }
 
-        parser.parse(testInput);
+    @Test
+    public void testParseNotEnoughParamsNumberFormatWarning() {
+        String testInput = "alice";
+        inputParser.parse(testInput);
         assertEquals(INCORRECT_FORMAT, outContent.toString());
     }
 }

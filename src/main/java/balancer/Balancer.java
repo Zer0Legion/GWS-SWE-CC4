@@ -2,7 +2,8 @@ package balancer;
 
 import java.util.Scanner;
 
-import balancer.io.Parser;
+import balancer.io.InputParser;
+import balancer.logic.Logic;
 
 /**
  * The main class for the Balancer app.
@@ -15,14 +16,17 @@ public class Balancer {
      */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Parser parser = new Parser();
+        InputParser inputParser = new InputParser();
         while (true) {
             String input = scanner.nextLine();
             if (input.isBlank()) {
-                parser.computeAverage();
+                inputParser.computeAverage();
+                Logic logic = new Logic(inputParser.getPayments(), inputParser.getAverage());
+                logic.calculateAnswer();
+                System.out.println(logic.getAnswer());
                 break;
             } else {
-                parser.parse(input);
+                inputParser.parse(input);
             }
         }
     }
