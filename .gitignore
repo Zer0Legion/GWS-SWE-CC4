@@ -1,5 +1,5 @@
 # IntelliJ files
-./.idea/*
+.idea
 
 # Binary files
 *.class
@@ -8,4 +8,5 @@
 *.jar
 
 # Output files
-./out/*
+out
+
