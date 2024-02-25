@@ -3,6 +3,7 @@ package balancer;
 import java.util.Scanner;
 
 import balancer.io.Parser;
+import balancer.logic.Logic;
 
 /**
  * The main class for the Balancer app.
@@ -20,6 +21,9 @@ public class Balancer {
             String input = scanner.nextLine();
             if (input.isBlank()) {
                 parser.computeAverage();
+                Logic logic = new Logic(parser.getPayments(), parser.getAverage());
+                logic.calculateAnswer();
+                System.out.println(logic.getAnswer());
                 break;
             } else {
                 parser.parse(input);

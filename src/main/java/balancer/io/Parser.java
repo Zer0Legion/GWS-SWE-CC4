@@ -86,7 +86,7 @@ public class Parser {
      * @param str The string to be parsed.
      */
     public void parse(String str) {
-        String[] params = str.split(",");
+        String[] params = str.split(",", 2);
         if (params.length != 2) {
             System.out.println(INCORRECT_FORMAT);
         } else {

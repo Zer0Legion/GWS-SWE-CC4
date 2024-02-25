@@ -1,4 +1,4 @@
-package io;
+package balancer.io;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -9,8 +9,6 @@ import java.util.HashMap;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import balancer.io.Parser;
 
 public class ParserTest {
     private static final String INCORRECT_FORMAT = "Please input an entry like this!\n{name},{amount paid}\r\n";
