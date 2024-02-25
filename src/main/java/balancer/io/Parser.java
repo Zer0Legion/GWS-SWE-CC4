@@ -17,6 +17,9 @@ public class Parser {
     private float total;
     private int nPax;
 
+    /**
+     * Constructor for the Parser class. Creates a parser to track information related to the app.
+     */
     public Parser() {
         this.payments = new HashMap<>();
         this.total = 0;
