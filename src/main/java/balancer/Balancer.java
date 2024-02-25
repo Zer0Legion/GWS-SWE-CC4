@@ -19,6 +19,7 @@ public class Balancer {
         while (true) {
             String input = scanner.nextLine();
             if (input.isBlank()) {
+                parser.computeAverage();
                 break;
             } else {
                 parser.parse(input);
