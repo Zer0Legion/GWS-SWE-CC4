@@ -87,7 +87,13 @@ public class ParserTest {
     @Test
     public void testParseInvalidFloatNumberFormatWarning() {
         String testInput = "Alice, not_float";
+        parser.parse(testInput);
+        assertEquals(INCORRECT_FORMAT, outContent.toString());
+    }
 
+    @Test
+    public void testParseNotEnoughParamsNumberFormatWarning() {
+        String testInput = "alice";
         parser.parse(testInput);
         assertEquals(INCORRECT_FORMAT, outContent.toString());
     }

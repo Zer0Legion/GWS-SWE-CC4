@@ -22,7 +22,7 @@ public class Logic {
     public Logic(HashMap<String, Float> map, float average) {
         this.answer = new StringBuilder();
         this.names = new ArrayList<>(map.keySet());
-        this.ledger = getLedger(map, average);
+        this.ledger = computeLedger(map, average);
         this.totalImbalance = calculateImbalance();
     }
 
@@ -30,8 +30,24 @@ public class Logic {
      * Calculates the outstanding imbalance in accounts. Used for rounding.
      * @return The outstanding imbalance.
      */
-    private float calculateImbalance() {
+    float calculateImbalance() {
         return this.ledger.stream().reduce(0F, (x, y) -> x + Math.max(0, y));
+    }
+
+    /**
+     * Getter for the list of names.
+     * @return The list of names.
+     */
+    ArrayList<String> getNames() {
+        return this.names;
+    }
+
+    /**
+     * Getter for the ledger.
+     * @return The ledger.
+     */
+    ArrayList<Float> getLedger() {
+        return this.ledger;
     }
 
     /**
@@ -40,7 +56,7 @@ public class Logic {
      * @param average The average amount paid.
      * @return The ledger taking the average as reference.
      */
-    private ArrayList<Float> getLedger(HashMap<String, Float> map, float average) {
+    ArrayList<Float> computeLedger(HashMap<String, Float> map, float average) {
         return new ArrayList<>(map.values()).stream()
                 .map(x -> x - average).collect(Collectors.toCollection(ArrayList::new));
     }
@@ -74,7 +90,7 @@ public class Logic {
      * Returns and removes the current minimum value in the ledger.
      * @return The minimum value in the ledger.
      */
-    private float pollMin() {
+    float pollMin() {
         float value = ledger.stream().reduce(Float.MAX_VALUE, Math::min);
         return value;
     }
@@ -83,7 +99,7 @@ public class Logic {
      * Returns the current maximum value in the ledger.
      * @return The maximum value in the ledger.
      */
-    private float pollMax() {
+    float pollMax() {
         float value = ledger.stream().reduce(Float.MIN_VALUE, Math::max);
         return value;
     }
@@ -93,7 +109,7 @@ public class Logic {
      * @param amount The amount the person owes or is owed.
      * @return The person's name.
      */
-    private String pollName(float amount) {
+    String pollName(float amount) {
         String name = names.get(ledger.indexOf(amount));
         names.remove(name);
         ledger.remove(amount);
@@ -107,7 +123,7 @@ public class Logic {
      * @param payeeOwed The amount the payee is owed in total.
      * @param payeeName The payee's name.
      */
-    private void handleTransaction(float payerOwes, String payerName, float payeeOwed, String payeeName) {
+    void handleTransaction(float payerOwes, String payerName, float payeeOwed, String payeeName) {
         float amountPaid = (float) Math.round(Math.min(payeeOwed, -payerOwes) * 100) / 100;
         totalImbalance -= amountPaid;
 
@@ -130,7 +146,7 @@ public class Logic {
      * @param name The name of the person.
      * @return The Title Case formatted name.
      */
-    private String toName(String name) {
+    String toName(String name) {
         StringBuilder stringBuilder = new StringBuilder();
         String[] parts = name.split(" ");
         for (int i = 0; i < parts.length; i++) {
@@ -141,6 +157,6 @@ public class Logic {
         return stringBuilder.toString().strip();
     }
     public void addAnswer(String payer, String payee, Float amount) {
-        this.answer.append(String.format("%s pays %s %.2f%n", toName(payer), toName(payee), amount));
+        this.answer.append(String.format("%s pays %s $%.2f%n", toName(payer), toName(payee), amount));
     }
 }
