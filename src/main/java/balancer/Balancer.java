@@ -2,7 +2,7 @@ package balancer;
 
 import java.util.Scanner;
 
-import balancer.io.Parser;
+import balancer.io.InputParser;
 import balancer.logic.Logic;
 
 /**
@@ -16,17 +16,17 @@ public class Balancer {
      */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Parser parser = new Parser();
+        InputParser inputParser = new InputParser();
         while (true) {
             String input = scanner.nextLine();
             if (input.isBlank()) {
-                parser.computeAverage();
-                Logic logic = new Logic(parser.getPayments(), parser.getAverage());
+                inputParser.computeAverage();
+                Logic logic = new Logic(inputParser.getPayments(), inputParser.getAverage());
                 logic.calculateAnswer();
                 System.out.println(logic.getAnswer());
                 break;
             } else {
-                parser.parse(input);
+                inputParser.parse(input);
             }
         }
     }

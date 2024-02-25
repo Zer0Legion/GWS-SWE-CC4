@@ -1,18 +1,20 @@
 package balancer.logic;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
-
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class LogicTest {
     private Logic logic;
-    HashMap<String, Float> map;
-    float average;
+    private HashMap<String, Float> map;
+    private float average;
 
     @BeforeEach
     public void setUp() {
@@ -56,7 +58,7 @@ public class LogicTest {
 
     @Test
     public void testPollNameRemovesName() {
-        float amount = -10F;
+        float amount = 10F;
         String name = logic.pollName(amount);
         assertFalse(logic.getNames().contains(name));
     }
@@ -75,8 +77,20 @@ public class LogicTest {
         float payerOwes = -10F;
         float payeeOwed = 10F;
         logic.handleTransaction(payerOwes, payerName, payeeOwed, payeeName);
-        String expectedAnswer = "Alice pays Charlie $10.00\r\n";
+        String expectedAnswer = "Alice pays Charlie $10.\r\nNumber of transactions: 1";
         assertEquals(expectedAnswer, logic.getAnswer());
+    }
+
+    @Test
+    public void testCalculateAnswerLedgerSize() {
+        logic.calculateAnswer();
+        assertEquals(1, logic.getLedger().size());
+    }
+
+    @Test
+    public void testCalculateAnswerNamesSize() {
+        logic.calculateAnswer();
+        assertEquals(1, logic.getNames().size());
     }
 
     @Test
@@ -86,7 +100,7 @@ public class LogicTest {
         float payerOwes = -20F;
         float payeeOwed = 10F;
         logic.handleTransaction(payerOwes, payerName, payeeOwed, payeeName);
-        String expectedAnswer = "Alice pays Charlie $10.00\r\n";
+        String expectedAnswer = "Alice pays Charlie $10.\r\nNumber of transactions: 1";
         assertEquals(expectedAnswer, logic.getAnswer());
     }
 
@@ -97,26 +111,22 @@ public class LogicTest {
         float payerOwes = -10F;
         float payeeOwed = 20F;
         logic.handleTransaction(payerOwes, payerName, payeeOwed, payeeName);
-        String expectedAnswer = "Alice pays Charlie $10.00\r\n";
+        String expectedAnswer = "Alice pays Charlie $10.\r\nNumber of transactions: 1";
         assertEquals(expectedAnswer, logic.getAnswer());
     }
 
     @Test
-    public void testToName() {
-        String name = "old mcdonald";
-        String expected = "Old Mcdonald";
-        String actual = logic.toName(name);
-        assertEquals(expected, actual);
-    }
-
-    @Test
     public void testGetNames() {
-        assertTrue(logic.getNames().contains("alice"));
+        Set<String> names = new HashSet<>(logic.getNames());
+        Set<String> expected = new HashSet<>(Arrays.asList("alice", "bob", "charlie"));
+        assertEquals(names, expected);
     }
 
     @Test
     public void testGetLedger() {
-        assertTrue(logic.getLedger().contains(-10F));
+        Set<Float> amounts = new HashSet<>(logic.getLedger());
+        Set<Float> expected = new HashSet<>(Arrays.asList(10F, 0F, -10F));
+        assertEquals(amounts, expected);
     }
 
 

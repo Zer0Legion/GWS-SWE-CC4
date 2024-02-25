@@ -4,15 +4,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 
+import balancer.io.AnswerParser;
+
 /**
  * The class encapsulating the logic behind the app.
  */
 public class Logic {
     private ArrayList<String> names;
     private ArrayList<Float> ledger;
-    private StringBuilder answer;
     private float totalImbalance;
     private int nTransactions;
+    private AnswerParser answer;
 
     /**
      * Constructor for Logic class. Initializes the payments map.
@@ -20,7 +22,7 @@ public class Logic {
      * @param average The average amount per person to be paid.
      */
     public Logic(HashMap<String, Float> map, float average) {
-        this.answer = new StringBuilder();
+        this.answer = new AnswerParser();
         this.names = new ArrayList<>(map.keySet());
         this.ledger = computeLedger(map, average);
         this.totalImbalance = calculateImbalance();
@@ -82,8 +84,6 @@ public class Logic {
 
             handleTransaction(payerOwes, payerName, payeeOwed, payeeName);
         }
-
-        this.answer.append(String.format("Number of transactions: %d", nTransactions));
     }
 
     /**
@@ -128,35 +128,15 @@ public class Logic {
         totalImbalance -= amountPaid;
 
         if (payerOwes == -payeeOwed) { // Both cancel out
-            addAnswer(payerName, payeeName, payeeOwed);
+            answer.addAnswer(payerName, payeeName, payeeOwed);
         } else if (-payerOwes > payeeOwed) { // Payer still owes money after evening out with payee
-            addAnswer(payerName, payeeName, amountPaid);
+            answer.addAnswer(payerName, payeeName, amountPaid);
             names.add(payerName);
             ledger.add(payerOwes + amountPaid);
         } else { // Payee is still owed money
-            addAnswer(payerName, payeeName, amountPaid);
+            answer.addAnswer(payerName, payeeName, amountPaid);
             names.add(payeeName);
             ledger.add(payeeOwed - amountPaid);
         }
-        nTransactions++;
-    }
-
-    /**
-     * Formats the lowercase string into Title Case.
-     * @param name The name of the person.
-     * @return The Title Case formatted name.
-     */
-    String toName(String name) {
-        StringBuilder stringBuilder = new StringBuilder();
-        String[] parts = name.split(" ");
-        for (int i = 0; i < parts.length; i++) {
-            stringBuilder.append(String.valueOf(parts[i].charAt(0)).toUpperCase());
-            stringBuilder.append(parts[i].substring(1));
-            stringBuilder.append(" ");
-        }
-        return stringBuilder.toString().strip();
-    }
-    public void addAnswer(String payer, String payee, Float amount) {
-        this.answer.append(String.format("%s pays %s $%.2f%n", toName(payer), toName(payee), amount));
     }
 }
