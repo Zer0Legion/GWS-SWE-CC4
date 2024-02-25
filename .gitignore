@@ -1,11 +1,11 @@
 # IDEA files
-/.idea/
-/out/
+.idea
+out/
 /*.iml
 
 # Gradle build files
-/.gradle/
-/build/
+.gradle/
+build/
 src/main/resources/docs/
 
 # MacOS custom attributes files created by Finder
@@ -20,3 +20,4 @@ text-ui-test/EXPECTED-UNIX.TXT
 *.class
 *.jar
 *.exe
+*.bat
