@@ -1,0 +1,12 @@
+# IntelliJ files
+.idea
+
+# Binary files
+*.class
+*.exe
+*.bin
+*.jar
+
+# Output files
+out
+
