@@ -1,6 +1,29 @@
 # GWS-SWE-CC4
 Take home assignment for SWE Intern (GDS CC4.0).
 
+Written in Java.
+
+## Setup
+### Executable JAR File
+1. Ensure you have Java 11 or above.
+2. Download the JAR file from:
+
+    https://github.com/Zer0Legion/GWS-SWE-CC4/releases/tag/v1.0.
+
+3. Navigate to the directory where the JAR file is downloaded using your CLI. On Unix terminals (Git Bash), typing `ls` will show `Balancer.jar`.
+4. Run:
+
+    ```java -jar Balancer.jar```.
+5. Manually type in the input you want to test and enter a blank line to retrieve the answer (similar to the Word Document examples).
+6. For input redirection, you can type the following command: 
+    ```
+    java -jar Balancer.jar < {name of input file}
+    ```
+7. The testcases from the Word Document are included under the `docs/test` directory.
+
+### Source Code
+1. To view the source code, use Git to clone this repository to your desktop.
+
 ## Features and Design Choices
 ### References
 Build-related files like checkstyle and other configuration files were referenced from https://se-education.org/. 
@@ -30,3 +53,5 @@ and so on.
 My program will parse any `float` value that Java's `Float.parseFloat` can.
 
 Hence, commas should not be placed in the amount paid.
+
+## Thank you for your consideration.
