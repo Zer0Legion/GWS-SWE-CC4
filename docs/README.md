@@ -36,6 +36,7 @@ This is to account for situations where someone in the group has a windfall that
 > The representation for such an input is:
 > 
 > ```Ali,-5000```
+
 ### String parsing
 My program assumes that a valid name does not contain any commas in it.
 
