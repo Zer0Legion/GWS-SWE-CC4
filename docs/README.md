@@ -1,7 +1,7 @@
 # GWS-SWE-CC4
 Take home assignment for SWE Intern (GDS CC4.0).
 
-Written in Java.
+# Task 1
 
 ## Setup
 ### Executable JAR File
@@ -53,5 +53,17 @@ and so on.
 My program will parse any `float` value that Java's `Float.parseFloat` can.
 
 Hence, commas should not be placed in the amount paid.
+
+
+# Task 2
+
+<img src="./ERD.png">
+
+### Assumptions
+- **BOOKS** Relationship captures an instance of a booking. As there may be lull periods where there are completely no bookings with the hotel, 0 or more instances of **GUEST**s and **ROOM**s can participate in this relationship.
+- As multiple **BOOKING**s may be made in the real world (overbooking, etc), an additional `is_confirmed` attribute is included to represent the actual hotel stay. However, the constraint of a **ROOM** having 1 confirmed stay at a time will be left to the SQL code to enforce.
+- Each instance of **FURNISHING**, **DECOR** and **BATHROOM AMENITY** due to their physical nature can only be in 1 **ROOM** at a time, and hence they all have a 1 to N cardinality constraint with **ROOM**. They also can be in storage and thus do not have mandatory participation.
+- On the other hand, **TYPE** is abstract and thus 1 instance of it can participate in the relationship with multiple **ROOM** instances.
+- Each **ROOM** must have a **TYPE** which forces the mandatory participation.
 
 ## Thank you for your consideration.
